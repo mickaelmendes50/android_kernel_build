@@ -1,4 +1,16 @@
-ifeq ($(TARGET_PREBUILT_KERNEL),)
+ifeq ($(TARGET_USES_PREBUILT_KERNEL),true)
+
+ifeq ($(PREBUILT_KERNEL_PATH),)
+     $(error "PREBUILT_KERNEL_PATH is not defined yet. Please define in your device Makefile")
+endif
+PRODUCT_COPY_FILES += $(PREBUILT_KERNEL_PATH):$(TARGET_COPY_OUT)/kernel
+
+ifeq ($(PREBUILT_DTBO_PATH),)
+     $(error "PREBUILT_DTBO_PATH is not defined yet. Please define in your device Makefile")
+endif
+PRODUCT_COPY_FILES += $(PREBUILT_DTBO_PATH):$(TARGET_COPY_OUT)/dtbo.img
+
+else
 
 include device/qcom/kernelscripts/legacy_definitions.mk
 
